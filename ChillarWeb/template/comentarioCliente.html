@@ -1,0 +1,25 @@
+{% extends "Inicio.html" %}
+
+{% block comentario %}
+<div class="comment-form card">
+    <div class="flex justify-end">
+        <a href="/#testimonials" class="btn-x">&times;</a>
+    </div>
+    <h3>Deja tu comentario</h3>
+    <form action="/#testimonials/" method="post" class="card-content">{% csrf_token %}
+        <div class="form-group">
+            {{formCli.nombre_completo.label_tag}}
+            {{formCli.nombre_completo}}
+        </div>
+        <div class="form-group">
+            {{formCli.email.label_tag}}
+            {{formCli.email}}
+        </div>
+        <div class="form-group">
+            {{formCli.comentario.label_tag}}
+            {{formCli.comentario}}
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar comentario</button>
+    </form>
+</div>
+{% endblock %}

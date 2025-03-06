@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChillarWeb - Diseño y Desarrollo Web Profesional</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Estilos/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    {% include 'Menu.html' %}
+    
+    <main>
+        {% block content %}
+        <!-- Hero Section -->
+        <section>
+            <div class="container">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="flex flex-col justify-center space-y-4">
+                        <div class="space-y-2">
+                            <h1>Diseñamos páginas web que impulsan tu negocio</h1>
+                            <p class="text-muted">Creamos sitios web profesionales, modernos y optimizados que
+                                convierten visitantes en clientes.</p>
+                        </div>
+                        <div class="flex gap-4 hero-buttons">
+                            <a href="#contacto" class="btn btn-primary btn-lg">Solicitar presupuesto</a>
+                            <a href="#portfolio" class="btn btn-outline btn-lg">Ver portafolio</a>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <img src="/media/inicio.png" alt="Diseño web profesional" class="hero-image">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="bg-muted">
+            <div class="container">
+                <div class="text-center space-y-4 mb-12">
+                    <span class="badge">Nuestros Servicios</span>
+                    <h2>Soluciones web completas para tu negocio</h2>
+                    <p class="text-muted mx-auto" style="max-width: 800px;">Ofrecemos servicios integrales de diseño y
+                        desarrollo web adaptados a tus necesidades específicas.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Service 1 -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="service-icon">
+                                <i class="fas fa-laptop"></i>
+                            </div>
+                            <h3>Diseño Web</h3>
+                            <p class="text-muted">Diseños modernos y atractivos que reflejan la identidad de tu marca.
+                            </p>
+                        </div>
+                        <div class="card-content">
+                            <ul class="service-list">
+                                <li><i class="fas fa-check"></i> <span>Diseño responsivo</span></li>
+                                <li><i class="fas fa-check"></i> <span>Experiencia de usuario optimizada</span></li>
+                                <li><i class="fas fa-check"></i> <span>Identidad visual coherente</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="service-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <h3>Desarrollo Web</h3>
+                            <p class="text-muted">Desarrollo de sitios web funcionales con las últimas tecnologías.</p>
+                        </div>
+                        <div class="card-content">
+                            <ul class="service-list">
+                                <li><i class="fas fa-check"></i> <span>Código limpio y optimizado</span></li>
+                                <li><i class="fas fa-check"></i> <span>Integración de CMS</span></li>
+                                <li><i class="fas fa-check"></i> <span>Funcionalidades personalizadas</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="service-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h3>SEO y Marketing</h3>
+                            <p class="text-muted">Optimización para buscadores y estrategias de marketing digital.</p>
+                        </div>
+                        <div class="card-content">
+                            <ul class="service-list">
+                                <li><i class="fas fa-check"></i> <span>Optimización SEO on-page</span></li>
+                                <li><i class="fas fa-check"></i> <span>Análisis de palabras clave</span></li>
+                                <li><i class="fas fa-check"></i> <span>Estrategias de contenido</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        {% include 'Proyectos.html' %}
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="bg-muted">
+            {% include 'Clientes.html' %}
+            {% block comentario %}
+            {% endblock %}
+        </section>
+
+        <!-- Pricing Section -->
+        {% include 'Servicio.html' %}
+
+        <!-- Contact Section -->
+        {% include 'Equipo.html' %}
+
+
+        <!-- Contact Section -->
+        <section class="bg-muted" id="contacto">
+            {% include 'Contacto.html' %}
+            {% block 'gracias.html' %}
+            {% endblock %}
+        </section>
+
+        {% endblock %}
+    </main>
+
+    {% include 'Footer.html' %}
+
+</body>
+
+</html>

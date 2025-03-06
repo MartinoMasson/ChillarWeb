@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Estilos/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Proyectos</title>
+</head>
+
+<body>
+    {% if proyectos.proyectos %}
+    <section id="portfolio">
+        <div class="container">
+            <div class="text-center space-y-4 mb-12">
+                <span class="badge">Nuestro Portafolio</span>
+                <h2>Proyectos destacados</h2>
+                <p class="text-muted mx-auto" style="max-width: 800px;">Explora algunos de nuestros trabajos
+                    recientes y descubre cómo hemos ayudado a nuestros clientes a tener éxito en línea.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mx-auto max-w-5xl justify-center justify-items-center">
+                {% for proyecto in proyectos.proyectos %}
+                <a class="portfolio-item" href="{{proyecto.url}}" target="_blank" rel="noopener noreferrer">
+                    <img src="{{ proyecto.imagen.url }}" alt="{{ proyecto.name }}">
+                    <div class="portfolio-overlay">
+                        <h3>{{proyecto.name}}</h3>
+                        <p>{{proyecto.descripcion}}</p>
+                    </div>
+                </a>
+
+                {% endfor %}
+            </div>
+            {% if proyectos.leng > 6 %}
+            <div class="text-center mt-8">
+                <a href="/proyectos" class="btn btn-outline btn-lg">Ver más proyectos</a>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+    {% endif %}
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Estilos/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Clientes</title>
+</head>
+
+<body>
+    {% if clientes%}
+    <div class="container">
+        <div class="text-center space-y-4 mb-12">
+            <span class="badge">Testimonios</span>
+            <h2>Lo que dicen nuestros clientes</h2>
+            <p class="text-muted mx-auto" style="max-width: 800px;">Descubre por qué nuestros clientes confían
+                en nosotros para sus proyectos web.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {% for cliente in clientes %}
+            <div class="card text-center">
+                <div class="card-header">
+                    <div class="testimonial-icon">
+                        <i class="fas fa-comment"></i>
+                    </div>
+                    <h3>{{cliente.name}}</h3>
+                    <p class="text-muted">{{cliente.email.name}}</p>
+                </div>
+                <div class="card-content">
+                    <p class="text-muted">"{{cliente.comentario}}"</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Formulario para nuevos comentarios -->
+    <div class="text-center mt-8">
+        <p class="text-muted">
+            <a href="comentario/#testimonials" class="text-primary font-medium">Realizar un comentario</a>
+        </p>
+    </div>
+    {% endif %}
+</body>
+
+</html>

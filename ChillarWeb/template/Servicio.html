@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Estilos/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Servicios</title>
+</head>
+
+<body>
+    <section id="pricing">
+        <div class="container">
+            {% if planes %}
+            <div class="text-center space-y-4 mb-12">
+                <span class="badge">Precios</span>
+                <h2>Planes adaptados a tus necesidades</h2>
+                <p class="text-muted mx-auto" style="max-width: 800px;">Ofrecemos diferentes opciones para
+                    adaptarnos a tu presupuesto y requerimientos.</p>
+                </div>
+                
+                <div class="pricing-filter">
+                    <a href="?servicio=empresa#pricing" class="filter-btn" id="empresa">Empresa</a>
+                <a href="?servicio=local#pricing" class="filter-btn active" id="local">Local</a>
+                <a href="?servicio=emprendimiento#pricing" class="filter-btn" id="emprendimiento">Emprendimiento</a>
+            </div>
+
+
+            
+            <div class="text-center mt-8">
+                <p class="text-muted">¿Queres ver todos los planes?
+                    <a href="/servicios" class="text-primary font-medium">Ver todos los planes.</a>
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {% for plan in planes %}
+                <div class="card pricing-card">
+                    <div class="card-header">
+                        <h3>{{plan.nombre}}</h3>
+                        <div class="price">{{plan.costo}}</div>
+                        <p class="text-muted">{{plan.descripcion}}</p>
+                    </div>
+                    <div class="card-content">
+                        <ul class="service-list">
+                            {% for caracteristica in plan.caracteristica %}
+                            <li><i class="fas fa-check"></i> <span>{{caracteristica.caracteristica}}</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#contacto" class="btn btn-primary w-full">Seleccionar plan</a>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+            <div class="text-center mt-8">
+                <p class="text-muted">¿Necesitas una solución personalizada?
+                    <a href="#contacto" class="text-primary font-medium">Contáctanos</a> para un presupuesto a medida.
+                </p>
+            </div>
+            {% else %}
+            <div class="text-center">
+                <p class="text-muted">No hay planes disponibles en este momento. Por favor, vuelve más tarde o <a
+                        href="#contacto" class="text-primary font-medium">contáctanos</a> para más información.</p>
+            </div>
+            {% endif %}
+
+        </div>
+    </section>
+
+    <script>
+        // Función para obtener el valor de los parámetros en la URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Cuando la página se carga, aplicamos la clase 'active' al botón correspondiente
+        window.addEventListener('load', function () {
+            const servicio = getQueryParam('servicio'); // Obtener el valor del parámetro 'servicio'
+
+            // Eliminar la clase 'active' de todos los botones
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Si hay un valor para 'servicio', añadir la clase 'active' al botón correspondiente
+            if (servicio) {
+                const activeButton = document.getElementById(servicio); // Obtener el botón por el id del parámetro
+                if (activeButton) {
+                    activeButton.classList.add('active');
+                }
+            } else {
+                // Si no hay parámetro 'servicio', mantenemos el botón 'local' como activo por defecto
+                document.getElementById('local').classList.add('active');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
