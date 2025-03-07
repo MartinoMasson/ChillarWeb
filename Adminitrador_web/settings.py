@@ -55,7 +55,7 @@ ROOT_URLCONF = 'Adminitrador_web.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'ChillarWeb' / 'template'],
+        'DIRS': [os.path.join(BASE_DIR, 'ChillarWeb', 'template')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
