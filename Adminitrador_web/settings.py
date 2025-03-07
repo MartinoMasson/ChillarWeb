@@ -127,7 +127,6 @@ USE_TZ = True
 
 # Directorio para recolectar archivos estáticos
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
 # URL para acceder a archivos estáticos
 STATIC_URL = '/static/'
 
