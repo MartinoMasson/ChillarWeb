@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-+y_9*t^4-_3m=c%%usm2i)p&+=i4+j^vnl6^kkjz4h2ggx)l4n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['chillarweb.azurewebsites.net', 'localhost', '127.0.0.1']
 
 
 # Application definition
