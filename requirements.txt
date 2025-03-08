@@ -16,6 +16,7 @@ decorator==5.1.1
 dill==0.3.8
 Django==5.1.6
 django-crispy-forms==2.1
+django-jazzmin==3.0.1
 django-tailwind==3.8.0
 et-xmlfile==1.1.0
 executing==2.0.1
@@ -63,6 +64,7 @@ pypdfium2==4.30.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
 pytz==2024.1
+pywin32==306
 pyzmq==26.2.0
 requests==2.31.0
 requests-oauthlib==1.4.0
