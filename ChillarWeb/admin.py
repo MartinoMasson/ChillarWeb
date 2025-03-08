@@ -1,9 +1,6 @@
 from django.contrib import admin
 from django import forms
-from ChillarWeb.models import Servicio,Caracteristicas, Proyecto
-
-admin.site.site_header = 'Power fit'
-admin.site.site_title = 'Administrador de Gimnasios'
+from ChillarWeb.models import Servicio, Caracteristicas, Proyecto, Pagina
 
 class ServicioAdmin(admin.ModelAdmin):
     list_display = ('id_servicio', 'nombre', 'descripcion', 'get_costo')
@@ -21,6 +18,10 @@ class CaracteristicasAdmin(admin.ModelAdmin):
 class ProyectosAdmin(admin.ModelAdmin):
     list_display = ('name','descripcion')
 
-admin.site.register(Servicio,ServicioAdmin)
+class PaginaAdmin(admin.ModelAdmin):
+    list_display = ('titulo','texto')
+
 admin.site.register(Caracteristicas,CaracteristicasAdmin)
+admin.site.register(Servicio,ServicioAdmin)
 admin.site.register(Proyecto,ProyectosAdmin)
+admin.site.register(Pagina,PaginaAdmin)

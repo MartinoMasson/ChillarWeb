@@ -11,16 +11,15 @@
 </head>
 
 <body>
-    {% if equipo %}
+    {% if equipo.equipo %}
     <section id="developers">
         <div class="container">
             <div class="text-center space-y-4 mb-12">
                 <span class="badge">Nuestro Equipo</span>
-                <h2>Conoce a nuestros desarrolladores</h2>
-                <p class="text-muted mx-auto" style="max-width: 800px;">Detrás de cada proyecto exitoso hay un
-                    equipo de profesionales apasionados.</p>
+                <h2>{{equipo.titulo.texto}}</h2>
+                <p class="text-muted mx-auto" style="max-width: 800px;">{{equipo.titulo.descripcion}}</p>
             </div>
-            {% for profesional in equipo %}
+            {% for profesional in equipo.equipo %}
             <div class="developers-grid">
                 <div class="developer-card">
                     <img src="{{profesional.imagen.url}}" alt="Desarrollador" class="developer-avatar">

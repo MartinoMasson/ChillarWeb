@@ -1,14 +1,20 @@
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail
+from django.http import HttpResponse
 from django.conf import settings
 from ChillarWeb.forms import FormContacto,FormComentario
-from ChillarWeb.models import Servicio,Caracteristicas,Cliente,Proyecto
-from ChillarWeb.models import Cliente
+from ChillarWeb.models import Servicio,Caracteristicas,Cliente,Proyecto, Pagina, Desarrollador
 
 def proyectos(request):
     proy={}
     proy['proyectos'] = Proyecto.objects.all().order_by('?')[:3]
     proy['leng'] = Proyecto.objects.count()
+    texto = Pagina.objects.filter(titulo='Portafolio')
+    proy['titulo'] = {
+        "texto": texto[0].texto,
+        "descripcion": texto[0].descripcion if texto[0].descripcion else '',
+        "imagen": texto[0].imagen.url if texto[0].imagen else None
+    }
     return proy
 
 def cliente(request):
@@ -51,10 +57,40 @@ def contacto(request):
         
     return rtaForm
 
+def equipo(request):
+    equipo={}
+    equipo['equipo'] = Desarrollador.objects.all().order_by('?')[:3]
+    texto = Pagina.objects.filter(titulo='Equipo')
+    equipo['titulo'] = {
+        "texto": texto[0].texto,
+        "descripcion": texto[0].descripcion if texto[0].descripcion else '',
+        "imagen": texto[0].imagen.url if texto[0].imagen else None 
+    }
+    return equipo
+
 def inicio(req):
-    clientes=cliente(req)
+    # Consultar las páginas 'Inicio' y 'Servicios'
+    inicio_data = Pagina.objects.filter(titulo='Inicio')
+
+    inicio = {
+        "texto": inicio_data[0].texto,
+        "descripcion": inicio_data[0].descripcion if inicio_data[0].descripcion else '',
+        "imagen": inicio_data[0].imagen.url if inicio_data[0].imagen else None 
+    }
+
+    servicios_data = Pagina.objects.filter(titulo='Servicios')
+    servicios = {
+        "texto": servicios_data[0].texto,
+        "descripcion": servicios_data[0].descripcion if servicios_data[0].descripcion else '',
+        "imagen": servicios_data[0].imagen.url if servicios_data[0].imagen else None
+    }
+
+    clientes = cliente(req)
+
+    # Si no hay clientes
     if not clientes:
         if req.method == 'POST':
+            # Crear el formulario de comentarios
             rtaForm = FormComentario(req.POST)
             
             if rtaForm.is_valid():
@@ -64,43 +100,56 @@ def inicio(req):
                 email = infForm['email']
                 comentario = infForm['comentario']
                 
-                # Obtener el objeto Proyecto correspondiente al email
                 try:
+                    # Obtener el proyecto relacionado con el email
                     proyecto = Proyecto.objects.get(email=email)
                 except Proyecto.DoesNotExist:
-                    # Si no se encuentra el proyecto, puedes manejar el error de alguna manera
-                    return redirect('/#testimonials')  # O mostrar un mensaje de error
+                    # Si no se encuentra el proyecto, redirigir
+                    return redirect('/#testimonials')
 
-                # Crear el cliente con el proyecto encontrado
+                # Crear el cliente asociado con el proyecto encontrado
                 Cliente.objects.create(
                     name=nombre_completo,
-                    email=proyecto,  # Asignar el objeto Proyecto
+                    email=proyecto.email,  # Asignar el email del proyecto
                     comentario=comentario
                 )
-                return redirect('/#testimonials')
+                return redirect('/#testimonials')  # Redirigir después de crear el cliente
             
         else:
-            rtaForm = FormComentario()
-            
-        return render(req, 'comentarioCliente.html', {
+            rtaForm = FormComentario()  # Si no es POST, mostrar el formulario vacío
+
+        # Renderizar la página de comentarios del cliente
+        return render(req, 'inicio.html', {
+            'inicio': inicio,
+            'servicios': servicios,
             'formContacto': contacto(req),
-            'planes':servicio(req),
-            'clientes':cliente(req),
-            'proyectos':proyectos(req),
-            'formCli':rtaForm
+            'planes': servicio(req),
+            'clientes': clientes,
+            'proyectos': proyectos(req),
+            'equipo': equipo(req),
+            'formCli': rtaForm  # El formulario de comentarios
         })
+    
+    # Si hay clientes, renderizar la página de inicio
     return render(req, 'inicio.html', {
+        'inicio': inicio,
+        'servicios': servicios,
         'formContacto': contacto(req),
-        'planes':servicio(req),
-        'clientes':clientes,
-        'proyectos':proyectos(req),
+        'planes': servicio(req),
+        'clientes': clientes,
+        'proyectos': proyectos(req),
+        'equipo': equipo(req),
     })
-
-
+    
 def proyectosInd(request):
     proy = Proyecto.objects.all().order_by('name')
-    
-    return render(request, 'Individuales/proyectos.html', {'proyectos':proy})
+    texto = Pagina.objects.filter(titulo='Portafolio')
+    titulo = {
+        "texto": texto[0].texto,
+        "descripcion": texto[0].descripcion if texto[0].descripcion else '',
+        "imagen": texto[0].imagen.url if texto[0].imagen else None
+    }
+    return render(request, 'Individuales/proyectos.html', {'proyectos':proy, 'titulo':titulo})
 
 def servicioInd(request):
     servicio = request.GET.get('servicio', '')  # Obtener el valor de 'servicio' de la URL

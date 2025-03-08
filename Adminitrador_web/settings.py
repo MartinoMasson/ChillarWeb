@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['chillarweb.azurewebsites.net', 'localhost', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,7 +43,7 @@ INSTALLED_APPS = [
     'ChillarWeb',
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE = [ 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,7 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware'
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'Adminitrador_web.urls'
@@ -156,3 +157,145 @@ EMAIL_HOST_PASSWORD='avvw mooq xurd suvi'
 CSRF_TRUSTED_ORIGINS = [
     'https://chillarweb.azurewebsites.net',
 ]
+
+JAZZMIN_SETTINGS = {
+    # Título de la ventana (por defecto será el site_title actual_admin_site.site_title si no se especifica o es None)
+    "site_title": "ChillarWeb admin",
+
+    # Título en la pantalla de inicio de sesión (máximo 19 caracteres) (por defecto será el site_header actual_admin_site.site_header si no se especifica o es None)
+    "site_header": "ChillarWeb",
+
+    # Título en la marca (máximo 19 caracteres) (por defecto será el site_header actual_admin_site.site_header si no se especifica o es None)
+    "site_brand": "ChillarWeb",
+
+    # Logo que se usará para tu sitio, debe estar presente en los archivos estáticos, se usa para la marca en la parte superior izquierda
+    "site_logo": None,
+
+    # Logo que se usará para el formulario de inicio de sesión, debe estar presente en los archivos estáticos, se usa para el logo del formulario de inicio de sesión (por defecto es site_logo)
+    "login_logo": None,
+
+    # Logo que se usará para el formulario de inicio de sesión en temas oscuros (por defecto es login_logo)
+    "login_logo_dark": None,
+
+    # Clases CSS que se aplican al logo anterior
+    "site_logo_classes": "img-circle",
+
+    # Ruta relativa a un favicon para tu sitio, por defecto será site_logo si no se especifica (idealmente 32x32 px)
+    "site_icon": None,
+
+    # Texto de bienvenida en la pantalla de inicio de sesión
+    "welcome_sign": "Bienvenido a Chillar Web",
+
+    # Copyright en el pie de página
+    "copyright": "Acme Library Ltd",
+
+    # Lista de administradores de modelos para buscar desde la barra de búsqueda, se omite la barra de búsqueda si se excluye
+    # Si deseas usar un solo campo de búsqueda no necesitas usar una lista, puedes usar un simple string
+    "search_model": ["auth.User", "auth.Group"],
+
+    # Nombre del campo en el modelo de usuario que contiene el avatar (ImageField/URLField/Charfield o un callable que recibe el usuario)
+    "user_avatar": None,
+
+    ############
+    # Menú superior #
+    ############
+
+    # Enlaces para poner en el menú superior
+    "topmenu_links": [
+
+        # URL que se invierte (Se pueden agregar permisos)
+        {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
+
+        # URL externa que se abre en una nueva ventana (Se pueden agregar permisos)
+        {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+
+        # Admin de modelo para vincular (Se verifican permisos contra el modelo)
+        {"model": "auth.User"},
+
+        # App con menú desplegable para todas sus páginas de modelos (Se verifican permisos contra los modelos)
+        {"app": "books"},
+    ],
+
+    #############
+    # Menú del usuario #
+    #############
+
+    # Enlaces adicionales para incluir en el menú de usuario en la parte superior derecha ("app" tipo de url no permitido)
+    "usermenu_links": [
+        {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+        {"model": "auth.user"}
+    ],
+
+    #############
+    # Menú lateral #
+    #############
+
+    # Si se debe mostrar el menú lateral
+    "show_sidebar": True,
+
+    # Si se debe expandir automáticamente el menú
+    "navigation_expanded": True,
+
+    # Ocultar estas apps al generar el menú lateral, por ejemplo (auth)
+    "hide_apps": [],
+
+    # Ocultar estos modelos al generar el menú lateral (por ejemplo, auth.user)
+    "hide_models": [],
+
+    # Lista de apps (y/o modelos) para ordenar el menú lateral según (no es necesario que contenga todas las apps/modelos)
+    "order_with_respect_to": ["auth", "books", "books.author", "books.book"],
+
+    # Enlaces personalizados para agregar a grupos de apps, indexados por el nombre de la app
+    "custom_links": {
+        "books": [{
+            "name": "Make Messages", 
+            "url": "make_messages", 
+            "icon": "fas fa-comments",
+            "permissions": ["books.view_book"]
+        }]
+    },
+
+    # Iconos personalizados para apps/modelos del menú lateral. Ver https://fontawesome.com/icons?d=gallery&m=free&v=5.0.0,5.0.1,5.0.10,5.0.11,5.0.12,5.0.13,5.0.2,5.0.3,5.0.4,5.0.5,5.0.6,5.0.7,5.0.8,5.0.9,5.1.0,5.1.1,5.2.0,5.3.0,5.3.1,5.4.0,5.4.1,5.4.2,5.13.0,5.12.0,5.11.2,5.11.1,5.10.0,5.9.0,5.8.2,5.8.1,5.7.2,5.7.1,5.7.0,5.6.3,5.5.0,5.4.2
+    # para la lista completa de clases de iconos gratuitos 5.13.0
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+    },
+    # Iconos que se usan cuando no se especifica uno manualmente
+    "default_icon_parents": "fas fa-chevron-circle-right",
+    "default_icon_children": "fas fa-circle",
+
+    #################
+    # Modal relacionado #
+    #################
+    # Usar modales en lugar de popups
+    "related_modal_active": False,
+
+    #############
+    # Ajustes de UI #
+    #############
+    # Rutas relativas a archivos CSS/JS personalizados (deben estar presentes en los archivos estáticos)
+    "custom_css": None,
+    "custom_js": None,
+    # Si se debe enlazar la fuente desde fonts.googleapis.com (usa custom_css para suministrar la fuente de lo contrario)
+    "use_google_fonts_cdn": True,
+    # Si se debe mostrar el personalizador de UI en el menú lateral
+    "show_ui_builder": False,
+
+    ###############
+    # Vista de cambio #
+    ###############
+    # Renderizar la vista de cambio como un solo formulario, o en pestañas, las opciones actuales son
+    # - single
+    # - horizontal_tabs (por defecto)
+    # - vertical_tabs
+    # - collapsible
+    # - carousel
+    "changeform_format": "horizontal_tabs",
+    # Sobrescribir formularios de cambio por modeloadmin
+    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
+    # Agregar un selector de idioma en el administrador
+    "language_chooser": False,
+}
+
